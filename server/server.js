@@ -23,13 +23,18 @@ io.on('connection', (socket) => {
   // socket.on('createEmail', (newEmail) => {
   //   console.log('createEmail',newEmail);
   // })
-  socket.emit('newMessage', {
-    from : 'andrew',
-    text: 'u do good coding',
-    createdAt: 123
-  });
+  // socket.emit('newMessage', { //emits a message toa single connection
+  //   from : 'andrew',
+  //   text: 'u do good coding',
+  //   createdAt: 123
+  // });
   socket.on('createMessage',(message) => {
     console.log('CreateMessage',message);
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createAt: new Date().getTime()
+    });
   });
 
   socket.on('disconnect', () => {
